@@ -1,5 +1,6 @@
 import React from "react";
 import Aux from "../../../hoc/Auxilliry";
+import Button from "../../UI/Button/Button";
 export default function orderSummray(props) {
   const ingredientSummray = Object.keys(props.ingredients).map((igKey) => {
     return (
@@ -15,7 +16,17 @@ export default function orderSummray(props) {
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients: </p>
       <ul>{ingredientSummray}</ul>
+      <p>
+        Total Price: <strong>{props.totalprice.toFixed(2)}</strong>
+      </p>
       <p>Continue to Checkout</p>
+
+      <Button btnType="Danger" clicked={props.cancelClicked}>
+        CANCEL
+      </Button>
+      <Button btnType="Success" clicked={props.continueClicked}>
+        CONTINUE
+      </Button>
     </Aux>
   );
 }
