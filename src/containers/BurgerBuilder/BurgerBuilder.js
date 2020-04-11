@@ -98,6 +98,8 @@ class BurgerBuilder extends Component {
     for (let key in disableInfo) {
       disableInfo[key] = disableInfo[key] <= 0;
     }
+    // {salad:true, meat:false, .... }
+
     return (
       <Aux>
         <Modal show={this.state.purchasing} hideOrder={this.hideOrder}>
