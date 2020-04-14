@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 export default function navigationItems() {
   return (
     <ul className={classes.NavigationItems}>
-      <NavigationItem link="/" active>
-        Burger Builder
-      </NavigationItem>
-      <NavigationItem link="/Checkout">Checkout</NavigationItem>
+      <NavigationItem link="/">Burger Builder</NavigationItem>
+      <NavigationItem link="/orders">Orders</NavigationItem>
     </ul>
   );
 }
