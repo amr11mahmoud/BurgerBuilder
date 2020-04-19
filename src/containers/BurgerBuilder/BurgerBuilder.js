@@ -12,7 +12,7 @@ import * as actionTypes from "../../store/actions";
 
 class BurgerBuilder extends Component {
   state = {
-    purchesable: false,
+    // purchesable: false,
     purchasing: false,
     loading: false,
     error: false,
@@ -42,9 +42,7 @@ class BurgerBuilder extends Component {
         return sum + el;
       }, 0);
 
-    this.setState({
-      purchesable: sum > 0,
-    });
+    return sum > 0;
   }
 
   // addIngredientHandler = (type) => {
@@ -98,20 +96,17 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    const queryParams = [];
-    for (let i in this.state.ingredients) {
-      queryParams.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.state.ingredients[i])
-      );
-    }
-    queryParams.push("price=" + this.state.totalPrice);
-    const queryString = queryParams.join("&");
-    this.props.history.push({
-      pathname: "./checkout",
-      search: "?" + queryString,
-    });
+    // const queryParams = [];
+    // for (let i in this.state.ingredients) {
+    //   queryParams.push(
+    //     encodeURIComponent(i) +
+    //       "=" +
+    //       encodeURIComponent(this.state.ingredients[i])
+    //   );
+    // }
+    // queryParams.push("price=" + this.state.totalPrice);
+    // const queryString = queryParams.join("&");
+    this.props.history.push("/checkout");
   };
 
   render() {
@@ -142,7 +137,7 @@ class BurgerBuilder extends Component {
             removeIngredient={this.props.onIngredientRemoved}
             disabled={disableInfo}
             totalprice={this.props.price}
-            purchesable={this.state.purchesable}
+            purchesable={this.updatePurchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
           />
         </Aux>

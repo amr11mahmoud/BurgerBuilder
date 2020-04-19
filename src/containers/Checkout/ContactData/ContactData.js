@@ -5,6 +5,8 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import withRouter from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
+import { connect } from "react-redux";
+import * as actionTypes from "../../../store/actions";
 
 class ContactData extends Component {
   state = {
@@ -83,7 +85,9 @@ class ContactData extends Component {
           ],
         },
         value: "fastest",
-        validation: {},
+        validation: {
+          required: true,
+        },
         valid: true,
         touched: false,
       },
@@ -104,7 +108,7 @@ class ContactData extends Component {
       formData[formElement] = this.state.orderForm[formElement].value;
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       // in real app we should calculate these info in server side so user can't maniuplate it
       price: this.props.price,
       orderData: formData,
@@ -113,6 +117,7 @@ class ContactData extends Component {
       .post("/orders.json", order)
       .then((response) => {
         this.setState({ loading: false });
+        this.props.onRedirectToHome();
         this.props.history.push("/");
       })
 
@@ -195,4 +200,17 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRedirectToHome: () => dispatch({ type: actionTypes.RESET_STATE }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
