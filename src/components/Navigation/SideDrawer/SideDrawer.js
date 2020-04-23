@@ -15,7 +15,7 @@ const sideDrawer = (props) => {
       {/* hidOrder prop here is to dismiss the backdrop  */}
       <Backdrop hideOrder={props.closed} show={props.open} sideDrawer />
 
-      <div className={attachedClasses.join(" ")}>
+      <div className={attachedClasses.join(" ")} onClick={props.closed}>
         <Logo height="11%" marginBottom="32px" />
         <nav>
           <NavigationItems isAuthenticated={props.isAuth} />
