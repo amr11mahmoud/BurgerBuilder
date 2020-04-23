@@ -109,8 +109,9 @@ class ContactData extends Component {
       // in real app we should calculate these info in server side so user can't maniuplate it
       price: this.props.price,
       orderData: formData,
+      userId: this.props.userId,
     };
-    this.props.onOrderBurger(order);
+    this.props.onOrderBurger(order, this.props.token);
     // this.props.history.push("/");
   };
 
@@ -155,7 +156,6 @@ class ContactData extends Component {
         config: this.state.orderForm[key],
       });
     }
-
     let form = (
       <form onSubmit={this.orderHandler}>
         {formElementArray.map((formElement) => (
@@ -193,13 +193,16 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     // onRedirectToHome: () => dispatch({ type: actionTypes.RESET_STATE }),
-    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+    onOrderBurger: (orderData, token) =>
+      dispatch(actions.purchaseBurger(orderData, token)),
   };
 };
 

@@ -11,13 +11,13 @@ class Orders extends Component {
   //   loading: true,
   // };
   componentDidMount() {
-    this.props.onFetchOrders();
+    this.props.onFetchOrders(this.props.token, this.props.userId);
   }
 
   render() {
     let orders = <Spinner />;
 
-    if (this.props.loading == false) {
+    if (this.props.loading === false) {
       orders = (
         <div>
           {this.props.orders.map((order) => (
@@ -38,12 +38,15 @@ const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: () => dispatch(actions.fetchOrders()),
+    onFetchOrders: (token, userId) =>
+      dispatch(actions.fetchOrders(token, userId)),
   };
 };
 export default connect(

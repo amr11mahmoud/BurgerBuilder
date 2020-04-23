@@ -22,6 +22,9 @@ export const authFail = (error) => {
 };
 
 export const logOut = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expiraitonDate");
+  localStorage.removeItem("userId");
   return {
     type: actionType.AUTH_LOGOUT,
   };
@@ -53,6 +56,13 @@ export const auth = (email, password, isSignup) => {
       .post(url, authData)
       .then((response) => {
         console.log(response);
+        // save item to the local stoage
+        const expiraitonDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
+        localStorage.setItem("token", response.data.idToken);
+        localStorage.setItem("expiraitonDate", expiraitonDate);
+        localStorage.setItem("userId", response.data.localId);
         dispatch(authSuccess(response.data.idToken, response.data.localId));
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
@@ -63,28 +73,31 @@ export const auth = (email, password, isSignup) => {
   };
 };
 
-// // <!-- The core Firebase JS SDK is always required and must be listed first -->
-// <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+export const setAuthRedirectPath = (path) => {
+  return {
+    type: actionType.SET_AUTH_REDIRECT_PATH,
+    path: path,
+  };
+};
 
-// <!-- TODO: Add SDKs for Firebase products that you want to use
-//      https://firebase.google.com/docs/web/setup#available-libraries -->
-// <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
-
-// <script>
-//    Your web app's Firebase configuration
-//   var firebaseConfig = {
-//     apiKey: "AIzaSyDDOk-XlU6rZCbt9JFB9E3zBGqCGHiSSNk",
-//     authDomain: "burgerbuilder-7940b.firebaseapp.com",
-//     databaseURL: "https://burgerbuilder-7940b.firebaseio.com",
-//     projectId: "burgerbuilder-7940b",
-//     storageBucket: "burgerbuilder-7940b.appspot.com",
-//     messagingSenderId: "558832565598",
-//     appId: "1:558832565598:web:be95d10f7f7bf554e623cf",
-//     measurementId: "G-E955TXEBJY"
-//   };
-//   // Initialize Firebase
-//   firebase.initializeApp(firebaseConfig);
-//   firebase.analytics();
-// </script>
-
-// "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDOk-XlU6rZCbt9JFB9E3zBGqCGHiSSNk";
+export const authCheckState = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      dispatch(logOut());
+    } else {
+      const expiraitonDate = new Date(localStorage.getItem("expiraitonDate"));
+      if (expiraitonDate < new Date()) {
+        dispatch(logOut());
+      } else {
+        const userId = localStorage.getItem("userId");
+        dispatch(authSuccess(token, userId));
+        dispatch(
+          checkAuthTimeout(
+            (expiraitonDate.getTime() - new Date().getTime()) / 1000
+          )
+        );
+      }
+    }
+  };
+};
