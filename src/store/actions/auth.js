@@ -46,18 +46,15 @@ export const auth = (email, password, isSignup) => {
       password: password,
       returnSecureToken: true,
     };
-    const apiKey = process.env.REACT_APP_API_KEY;
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + apiKey;
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDDOk-XlU6rZCbt9JFB9E3zBGqCGHiSSNk";
     if (!isSignup) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
-        apiKey;
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDDOk-XlU6rZCbt9JFB9E3zBGqCGHiSSNk";
     }
     axios
       .post(url, authData)
       .then((response) => {
-        console.log(response);
         // save item to the local stoage
         const expiraitonDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000

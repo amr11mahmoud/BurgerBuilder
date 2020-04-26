@@ -11,14 +11,15 @@
   padding: 5px;
   margin: 0 5px;
   width: 80px;
-  border: 1px solid #aa6817;
+  border: 1px solid transparent;
+  border-radius: 20px;
   cursor: pointer;
   outline: none;
 }
 
 .BuildControl button:disabled {
-  background-color: #ac9980;
-  border: 1px solid #7e7365;
+  background-image: linear-gradient(#eee 100%);
+  border: 1px solid transparent;
   color: #ccc;
   cursor: default;
 }
@@ -32,16 +33,16 @@
 .Label {
   padding: 10px;
   font-weight: bold;
-  width: 80px;
+  width: 70px;
 }
 
 .BuildControl .Less {
-  background-color: #d39952;
+  background-image: linear-gradient(to right, #2af598);
   color: white;
 }
 
 .BuildControl .More {
-  background-color: #8f5e1e;
+  background-image: linear-gradient(to right, #08aeea);
   color: white;
 }
 
@@ -49,10 +50,12 @@
 .BuildControl .Less:active {
   background-color: #daa972;
   color: white;
+  border: 1px solid white;
 }
 
 .BuildControl .More:hover,
 .BuildControl .More:active {
   background-color: #99703f;
   color: white;
+  border: 1px solid white;
 }

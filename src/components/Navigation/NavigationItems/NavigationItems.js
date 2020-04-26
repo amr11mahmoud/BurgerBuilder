@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./NavigationItems.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
-import { Link } from "react-router-dom";
 export default function navigationItems(props) {
   return (
     <ul className={classes.NavigationItems}>

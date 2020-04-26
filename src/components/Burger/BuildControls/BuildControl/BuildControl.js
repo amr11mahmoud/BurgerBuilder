@@ -3,7 +3,6 @@ import classes from "./BuildControl.css";
 export default function buildControl(props) {
   return (
     <div className={classes.BuildControl}>
-      <div className={classes.Label}>{props.label}</div>
       <button
         className={classes.Less}
         onClick={props.removeIngredient}
@@ -11,6 +10,8 @@ export default function buildControl(props) {
       >
         Less
       </button>
+      <div className={classes.Label}>{props.label}</div>
+
       <button className={classes.More} onClick={props.addIngredient}>
         more
       </button>

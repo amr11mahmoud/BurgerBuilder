@@ -10,7 +10,7 @@ import withErrorHandler from "../../hoc/withErrorHandling/withErrorHandler";
 import { connect } from "react-redux";
 // import * as actionTypes from "../../store/actions/actionTypes";
 import * as burgerBuilderActions from "../../store/actions/index";
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     // purchesable: false,
     purchasing: false,
